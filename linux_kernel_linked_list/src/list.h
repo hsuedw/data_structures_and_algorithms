@@ -1,6 +1,28 @@
 #ifndef __LIST_H__
 #define __LIST_H__
 
+#include <stdbool.h>
+
+#define POISON_POINTER_DELTA  0xdead000000000000
+#define LIST_POISON1  ((void *) 0x100 + POISON_POINTER_DELTA)
+#define LIST_POISON2  ((void *) 0x200 + POISON_POINTER_DELTA)
+
+#define offsetof(TYPE, MEMBER) ((size_t) &((TYPE *)0)->MEMBER)
+
+#define container_of(ptr, type, member) ({                      \
+        const typeof( ((type *)0)->member ) *__mptr = (ptr);    \
+        (type *)( (char *)__mptr - offsetof(type,member) );})
+
+/*
+ * Simple doubly linked list implementation.
+ *
+ * Some of the internal functions ("__xxx") are useful when
+ * manipulating whole lists rather than single entries, as
+ * sometimes we already know the next/prev entries and we can
+ * generate better code by using them directly rather than
+ * using the generic single-entry routines.
+ */
+
 struct list_head {
         struct list_head *next, *prev;
 };
@@ -100,14 +122,12 @@ static inline void __list_del_entry(struct list_head *entry)
 	__list_del(entry->prev, entry->next);
 }
 
-#if 0 // commented by Edward 2022/08/06
 static inline void list_del(struct list_head *entry)
 {
 	__list_del_entry(entry);
 	entry->next = LIST_POISON1;
 	entry->prev = LIST_POISON2;
 }
-#endif
 
 /**
  * list_replace - replace old entry by new one
