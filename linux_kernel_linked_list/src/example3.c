@@ -37,10 +37,18 @@ int main(int argc, char *argv[])
      */
 
     struct list_head *it = NULL;
+    printf("list_for_each: ");
     list_for_each(it, &head) {
         printf("0x%p ", it);
     }
     printf("\n");
-    
+ 
+    it = NULL;
+    printf("list_for_each_prev: ");
+    list_for_each_prev(it, &head) {
+        printf("0x%p ", it);
+    }
+    printf("\n");
+   
     return 0;
 }
