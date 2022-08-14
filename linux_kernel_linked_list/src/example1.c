@@ -5,35 +5,23 @@
  * Add several nodes right after the head of the doubly linked list.
  */
 
-struct test_list {
-    int value;
-    struct list_head node;
-};
-
-void init_node(struct test_list *n, int v)
-{
-    INIT_LIST_HEAD(&n->node);
-    n->value = v;
-}
-
 int main(int argc, char *argv[])
 {
     LIST_HEAD(head);
 
-    struct test_list data1;
-    init_node(&data1, 1);
-    list_add(&data1.node, &head);
+    LIST_HEAD(node1);
+    list_add(&node1, &head);
 
-    struct test_list data2;
-    init_node(&data2, 2);
-    list_add(&data2.node, &head);
+    LIST_HEAD(node2);
+    list_add(&node2, &head);
 
-    struct test_list data3;
-    init_node(&data3, 3);
-    list_add(&data3.node, &head);
+    LIST_HEAD(node3);
+    list_add(&node3, &head);
 
     /*
-     * Now, the doubly linked list is "head <-> 3 <-> 2 <-> 1".
+     * Now, the doubly linked list is head <-> node3 <-> node2 <-> node1
+     *                                  ^                            ^
+     *                                  |____________________________|
      */
     
     return 0;
